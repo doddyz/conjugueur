@@ -28,7 +28,7 @@ def get_page_soup(verb):
 
 def get_page_mode_tables(verb):
     soup = get_page_soup(verb)
-    all_tables = soup.find_all('table')
+    all_tables = soup.find_all('table', class_=is_none_css)
     return_dict = {}
     return_dict['modes'] = all_tables[0]
     return_dict['verbe_du_n_groupe'] = all_tables[1]
@@ -43,23 +43,23 @@ def get_page_mode_tables(verb):
 def get_mode_tense_sub_tables(verb, mode):
     if (mode == 'indicatif'):
         mode_table = get_page_mode_tables(verb)['indicatif']
-        print(mode_table)
+        # print(mode_table)
     sub_tables = mode_table.find_all('table')
 
-    print(sub_tables)
+    # print(sub_tables)
     
-    # sub_tables_dict = {
-    #     'present': sub_tables[0],
-    #     'passe_compose': sub_tables[1],
-    #     'imparfait': sub_tables[2],
-    #     'plus_que_parfait': sub_tables[3],
-    #     'passe_simple': sub_tables[4],
-    #     'passe_anterieur': sub_tables[5],
-    #     'futur': sub_tables[6],
-    #     'futur_anterieur': sub_tables[7],
-    #     }
+    sub_tables_dict = {
+        'present': sub_tables[0],
+        'passe_compose': sub_tables[1],
+        'imparfait': sub_tables[2],
+        'plus_que_parfait': sub_tables[3],
+        'passe_simple': sub_tables[4],
+        'passe_anterieur': sub_tables[5],
+        'futur': sub_tables[6],
+        'futur_anterieur': sub_tables[7],
+        }
 
-    # return sub_tables_dict
+    return sub_tables_dict
 
 
 def df_from_mode_tense_sub_table(verb, mode, tense):
@@ -77,8 +77,9 @@ def df_from_mode_tense_sub_table(verb, mode, tense):
 
     return pd.DataFrame({mode_tense_sub_table_header: pronoums_verb_forms})
     
-    
-
+# To check whether an element has a set class
+def is_none_css(css_class):
+    return css_class is None
 
 
     
