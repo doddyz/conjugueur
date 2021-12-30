@@ -37,7 +37,7 @@ def get_page_mode_tables(verb):
     return_dict['subjonctif'] = all_tables[4]
     return_dict['conditionnel'] = all_tables[5]
     return_dict['imperatif'] = all_tables[6]
-
+_si
     return return_dict
 
 def get_mode_tense_sub_tables(verb, mode):
@@ -67,15 +67,28 @@ def df_from_mode_tense_sub_table(verb, mode, tense):
     mode_tense_sub_table = mode_tense_sub_tables[tense]
     mode_tense_sub_table_header = mode_tense_sub_table.find('th').text
 
-    pronoums_tds = mode_tense_sub_table.find_all(align='right')
-    pronoums = [pronoums_tds[i].text.strip() for i,_ in enumerate(pronoums_tds) if i % 2 == 0]
+    mode_tense_sub_table_trs = mode_tense_sub_table.find_all('tr')
+    mode_tense_sub_table_tds = mode_tense_sub_table.find_all('td')
 
-    verb_forms_tds = mode_tense_sub_table.find_all(align='left')
-    verb_forms = [verb_forms_tds[i].text.strip() for i,_ in enumerate(verb_forms_tds) if i % 2 == 0]
+    # print(mode_tense_sub_table_tds)
 
-    pronoums_verb_forms = [elt[0] + ' ' + elt[1] for elt in list(zip(pronoums, verb_forms))]
+    # Get pronouns
+    # We exclude the 0th index td as it contains the tense name & no pronoums nor verb forms
+    pronoums = [td.text for td in mode_tense_sub_table_tds]
 
-    return pd.DataFrame({mode_tense_sub_table_header: pronoums_verb_forms})
+    print(pronoums)
+    
+    # Get verb forms 
+    
+    
+    # Works only for non compound tenses like present, imparfait, passe simple
+    # pronoums_tds = mode_tense_sub_table.find_all(align='right')
+    # pronoums = [pronoums_tds[i].text.strip() for i,_ in enumerate(pronoums_tds) if i % 2 == 0]
+    # verb_forms_tds = mode_tense_sub_table.find_all(align='left')
+    # verb_forms = [verb_forms_tds[i].text.strip() for i,_ in enumerate(verb_forms_tds) if i % 2 == 0]
+    # pronoums_and_verb_forms = [elt[0] + ' ' + elt[1] for elt in list(zip(pronoums, verb_forms))]
+
+    # return pd.DataFrame({mode_tense_sub_table_header: pronoums_and_verb_forms})
     
 # To check whether an element has a set class
 def is_none_css(css_class):
@@ -84,8 +97,8 @@ def is_none_css(css_class):
 
     
 # Play
-# df_from_mode_tense_sub_table('aimer', 'indicatif', 'passe_compose')
-df_from_mode_tense_sub_table('aimer', 'indicatif', 'present')
+# df_from_mode_tense_sub_table('aimer', 'indicatif', 'present')
+df_from_mode_tense_sub_table('aimer', 'indicatif', 'passe_compose')
     
 
     
