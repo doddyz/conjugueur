@@ -1,4 +1,6 @@
-# Regler characteres en trop dans les tables des formes composees de l'indicatif (passe compose, plus que parfait etc ...  j’eus j’eus \n\ndû \n\n\ʒ‿y dy\ ...)
+# Distinction entre verbes avec ou sans tables conj active/pronomiale
+
+# characteres en trop dans les tables des formes composees de l'indicatif (passe compose, plus que parfait etc ...  j’eus j’eus \n\ndû \n\n\ʒ‿y dy\ ...)
 # Recuperer tables pour chaque mode
 # Recuperer sous tables pour chaque temps dans chaque mode
 # Recuperer lignes pour (pronoms) et formes conjuguées
@@ -15,9 +17,9 @@ def get_page_soup(verb):
     soup = BeautifulSoup(r.content, 'html.parser')
     return soup
 
-def get_page_elts(verb):
-    page = get_page(verb)
-    soup = BeautifulSoup(page, 'html.parser')
+# def get_page_elts(verb):
+#     page = get_page(verb)
+#     soup = BeautifulSoup(page, 'html.parser')
     
     # get_page_mode_tables(verb)
     # get_page_tense_tables(verb, mode)
@@ -41,21 +43,23 @@ def get_page_mode_tables(verb):
 def get_mode_tense_sub_tables(verb, mode):
     if (mode == 'indicatif'):
         mode_table = get_page_mode_tables(verb)['indicatif']
-
+        print(mode_table)
     sub_tables = mode_table.find_all('table')
-    
-    sub_tables_dict = {
-        'present': sub_tables[0],
-        'passe_compose': sub_tables[1],
-        'imparfait': sub_tables[2],
-        'plus_que_parfait': sub_tables[3],
-        'passe_simple': sub_tables[4],
-        'passe_anterieur': sub_tables[5],
-        'futur': sub_tables[6],
-        'futur_anterieur': sub_tables[7],
-        }
 
-    return sub_tables_dict
+    print(sub_tables)
+    
+    # sub_tables_dict = {
+    #     'present': sub_tables[0],
+    #     'passe_compose': sub_tables[1],
+    #     'imparfait': sub_tables[2],
+    #     'plus_que_parfait': sub_tables[3],
+    #     'passe_simple': sub_tables[4],
+    #     'passe_anterieur': sub_tables[5],
+    #     'futur': sub_tables[6],
+    #     'futur_anterieur': sub_tables[7],
+    #     }
+
+    # return sub_tables_dict
 
 
 def df_from_mode_tense_sub_table(verb, mode, tense):
@@ -78,7 +82,9 @@ def df_from_mode_tense_sub_table(verb, mode, tense):
 
 
     
-    
+# Play
+# df_from_mode_tense_sub_table('aimer', 'indicatif', 'passe_compose')
+df_from_mode_tense_sub_table('aimer', 'indicatif', 'present')
     
 
     
