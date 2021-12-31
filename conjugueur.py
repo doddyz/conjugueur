@@ -22,15 +22,13 @@ def get_page_mode_tables(verb):
     soup = get_page_soup(verb)
     # all_tables = soup.find_all('table', width='100%')
     all_tables = soup.find_all(border='0', width='100%')
-    print(all_tables)
     return_dict = {}
-    return_dict['modes'] = all_tables[0]
-    return_dict['verbe_du_n_groupe'] = all_tables[1]
-    return_dict['modes_impersonnels'] = all_tables[2]
-    return_dict['indicatif'] = all_tables[3]
-    return_dict['subjonctif'] = all_tables[4]
-    return_dict['conditionnel'] = all_tables[5]
-    return_dict['imperatif'] = all_tables[6]
+    # return_dict['verbe_du_n_groupe'] = all_tables[1]
+    return_dict['modes_impersonnels'] = all_tables[0]
+    return_dict['indicatif'] = all_tables[1]
+    return_dict['subjonctif'] = all_tables[2]
+    return_dict['conditionnel'] = all_tables[3]
+    return_dict['imperatif'] = all_tables[4]
 
     return return_dict
 
