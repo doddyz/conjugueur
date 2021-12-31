@@ -115,6 +115,7 @@ def df_from_mode_tense_sub_table(verb, mode, tense, is_compound_tense):
     return pd.DataFrame({mode_tense_sub_table_header: pronoums_and_verb_forms}, index=None)
 
 
+
 # Findall filter functions 
 def has_width_attr(tag):
     return tag.has_attr('width')
