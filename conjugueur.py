@@ -6,6 +6,7 @@
 
 import pandas as pd
 import requests
+import streamlit as st
 from bs4 import BeautifulSoup
 
 BASE_CONJUGATE_URL = 'https://fr.wiktionary.org/wiki/Conjugaison:fran%C3%A7ais/'
@@ -92,7 +93,7 @@ def get_mode_tense_sub_tables(verb, mode):
 
     return sub_tables_dict
 
-
+@st.cache
 def df_from_mode_tense_sub_table(verb, mode, tense, is_compound_tense):
     
     mode_tense_sub_tables = get_mode_tense_sub_tables(verb, mode)
