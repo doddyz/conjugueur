@@ -1,3 +1,5 @@
+# Il faudra regler l'alignement des largeurs de tables de modes distincts avec contraintes existantes sur les tables st.columns
+
 from conjugueur import *
 import streamlit as st
 
@@ -35,7 +37,7 @@ if verbe:
 
         st.markdown('###### Indicatif')  
         
-        indicatif1, indicatif2, indicatif3, indicatif4 = st.columns(4)
+        col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
     
         df_present = df_from_mode_tense_sub_table(verbe, 'indicatif', 'present', False)
         df_passe_compose = df_from_mode_tense_sub_table(verbe, 'indicatif', 'passe_compose', True)
@@ -53,42 +55,48 @@ if verbe:
         df_futur_anterieur = df_from_mode_tense_sub_table(verbe, 'indicatif', 'futur_anterieur', True)
         df_indicatif_4 = pd.concat([df_futur, df_futur_anterieur], axis=1)
 
-        with indicatif1:
+        with col1:
             st.table(df_indicatif_1)
         
-        with indicatif2:
+        with col2:
             st.table(df_indicatif_2)
 
-        with indicatif3:
+        with col3:
             st.table(df_indicatif_3)
 
-        with indicatif4:
+        with col4:
             st.table(df_indicatif_4)
+
+        st.markdown('###### Subjonctif') 
+            
+        col5, col6 = st.columns(2)
+            
+        df_present = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'present', False)
+        df_passe = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'passe', True)
+        df_subjonctif_1 = pd.concat([df_present, df_passe], axis=1)
         
+        df_imparfait = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'imparfait', False)
+        df_plus_que_parfait = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'plus_que_parfait', True)
+        df_subjonctif_2 = pd.concat([df_imparfait, df_plus_que_parfait], axis=1)
 
-        with subjonctif:
-
-            st.markdown('###### Subjonctif') 
-            
-            subjonctif1, subjonctif2 = st.columns(2)
-            
-            df_present = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'present', False)
-            df_passe = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'passe', True)
-            df_subjonctif_1 = pd.concat([df_present, df_passe], axis=1)
-    
-            df_imparfait = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'imparfait', False)
-            df_plus_que_parfait = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'plus_que_parfait', True)
-            df_subjonctif_2 = pd.concat([df_imparfait, df_plus_que_parfait], axis=1)
-
-            
-            with subjonctif1:
-
-                st.table(df_subjonctif_1)
+        with col5:
+            st.table(df_subjonctif_1)
         
-            with subjonctif2:
-                st.table(df_subjonctif_2)
+        with col6:
+            st.table(df_subjonctif_2)
 
 
+        st.markdown('###### Conditionnel') 
+            
+        col7, col8 = st.columns(2)
+            
+        df_present = df_from_mode_tense_sub_table(verbe, 'conditionnel', 'present', False)
+        df_passe = df_from_mode_tense_sub_table(verbe, 'conditionnel', 'passe', True)
+        df_conditionnel_1 = pd.concat([df_present, df_passe], axis=1)
+
+        with col7:
+            st.table(df_conditionnel_1)
+        
 
 
 
