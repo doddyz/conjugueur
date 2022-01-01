@@ -108,23 +108,21 @@ def df_from_mode_tense_sub_table(verb, mode, tense, is_compound_tense):
         
         right_forms = [td.text for i,td in enumerate(mode_tense_sub_table_tds) if i % 4 == 1]
 
-        # See if this can be moved after 2 conditional branches by editing
-        left_and_right_forms = [elt[0] + elt[1] for elt in list(zip(left_forms, right_forms))]
-
     # For compound forms 
     else:
-        pronoums_and_auxiliary = [td.text.replace('\n', '') for i,td in enumerate(mode_tense_sub_table_tds) if i % 3 == 0]
+        left_forms = [td.text.replace('\n', '') for i,td in enumerate(mode_tense_sub_table_tds) if i % 3 == 0]
 
-        participles = [td.text.replace('\n', '') for i,td in enumerate(mode_tense_sub_table_tds) if i % 3 == 1]
+        right_forms = [td.text.replace('\n', '') for i,td in enumerate(mode_tense_sub_table_tds) if i % 3 == 1]
 
-        pronoums_and_verb_forms = [elt[0].strip() + ' ' + elt[1].strip() for elt in list(zip(pronoums_and_auxiliary, participles))]
+
+    left_and_right_forms = [elt[0] + elt[1] for elt in list(zip(left_forms, right_forms))]
 
         # print(pronoums_and_auxiliary)
                 
         # print(participles)
 
 
-    return pd.DataFrame({mode_tense_sub_table_header: pronoums_and_verb_forms}, index=None)
+    return pd.DataFrame({mode_tense_sub_table_header: left_and_right_forms}, index=None)
 
 
 
