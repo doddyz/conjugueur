@@ -1,12 +1,8 @@
-# Proper partition de noms entre compound et non compound,
-# Simplifier grandement le code de l'appli en mettant en boite les appels de fonctions d'un meme mode ensemble, avec eventuellement fonction cache? peut etre oui
-# Simplifier df_from_mode_tense_sub_table pour que cela fonctionne avec autres modes
-# Subjonctif present a regler (remove extra \n replacement)
 # Imperatif present : construitre liste speciale car pas de pronom, a regler peut etre simultanement avec formes impersonnelles
 
 import pandas as pd
 import requests
-import streamlit as st
+# import streamlit as st
 from bs4 import BeautifulSoup
 
 BASE_CONJUGATE_URL = 'https://fr.wiktionary.org/wiki/Conjugaison:fran%C3%A7ais/'
@@ -25,7 +21,7 @@ def get_page_mode_tables(verb):
     all_tables = soup.find_all(border='0', width='100%')
     return_dict = {}
     # return_dict['verbe_du_n_groupe'] = all_tables[1]
-    # return_dict['modes_impersonnels'] = all_tables[0]
+    return_dict['modes_impersonnels'] = all_tables[0]
     return_dict['indicatif'] = all_tables[1]
     return_dict['subjonctif'] = all_tables[10]
     return_dict['conditionnel'] = all_tables[15]
@@ -93,6 +89,7 @@ def get_mode_tense_sub_tables(verb, mode):
 
     return sub_tables_dict
 
+
 @st.cache
 def df_from_mode_tense_sub_table(verb, mode, tense, is_compound_tense):
     
@@ -102,14 +99,14 @@ def df_from_mode_tense_sub_table(verb, mode, tense, is_compound_tense):
 
     mode_tense_sub_table_trs = mode_tense_sub_table.find_all('tr')
     mode_tense_sub_table_tds = mode_tense_sub_table.find_all('td')
-
+            
     if not is_compound_tense:
         
         left_forms = [td.text.replace('\xa0', ' ') for i,td in enumerate(mode_tense_sub_table_tds) if i % 4 == 0]
         
         right_forms = [td.text for i,td in enumerate(mode_tense_sub_table_tds) if i % 4 == 1]
 
-    # For compound forms 
+    # For compound forms of indicative as well as for imperative mode 
     else:
         left_forms = [td.text.replace('\n', '') for i,td in enumerate(mode_tense_sub_table_tds) if i % 3 == 0]
 
@@ -124,7 +121,6 @@ def df_from_mode_tense_sub_table(verb, mode, tense, is_compound_tense):
 
 
     return pd.DataFrame({mode_tense_sub_table_header: left_and_right_forms}, index=None)
-
 
 
 # Findall filter functions 
