@@ -2,14 +2,11 @@
 
 import pandas as pd
 import requests
-# import streamlit as st
+import streamlit as st
 from bs4 import BeautifulSoup
 
 BASE_CONJUGATE_URL = 'https://fr.wiktionary.org/wiki/Conjugaison:fran%C3%A7ais/'
 
-# TENSES = {'indicatif': {'simple': ['present', 'imparfait', 'plus_que_parfait', 'passe_simple', 'passe_anterieur', 'futur', 'futur_anterieur']} 'compound': ['passe_compose', ]}, 'subjonctif': {}}
-
-# May need to url safe encode verb if contains accents, test this !!
 def get_page_soup(verb):
     r = requests.get(BASE_CONJUGATE_URL + verb)
     soup = BeautifulSoup(r.content, 'html.parser')
@@ -115,27 +112,9 @@ def df_from_mode_tense_sub_table(verb, mode, tense, is_compound_tense):
 
     left_and_right_forms = [elt[0] + elt[1] for elt in list(zip(left_forms, right_forms))]
 
-        # print(pronoums_and_auxiliary)
-                
-        # print(participles)
-
 
     return pd.DataFrame({mode_tense_sub_table_header: left_and_right_forms}, index=None)
 
-
-# Findall filter functions 
-def has_width_attr(tag):
-    return tag.has_attr('width')
-
-
-def is_none_css(css_class):
-    return css_class is None
-
-
-    
-# Play
-# df_from_mode_tense_sub_table('aimer', 'indicatif', 'present')
-# df_from_mode_tense_sub_table('aimer', 'indicatif', 'passe_compose')
     
 
     

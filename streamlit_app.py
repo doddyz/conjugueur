@@ -29,11 +29,9 @@ if verbe:
 
     st.write('#####')
     
-    indicatif = st.container()
-    subjonctif = st.container()
+    modes_container = st.container()
 
-
-    with indicatif:
+    with modes_container:
 
         st.markdown('###### Indicatif')  
         
@@ -41,6 +39,7 @@ if verbe:
     
         df_present = df_from_mode_tense_sub_table(verbe, 'indicatif', 'present', False)
         df_passe_compose = df_from_mode_tense_sub_table(verbe, 'indicatif', 'passe_compose', True)
+
         df_indicatif_1 = pd.concat([df_present, df_passe_compose], axis=1)
     
         df_imparfait = df_from_mode_tense_sub_table(verbe, 'indicatif', 'imparfait', False)
@@ -48,11 +47,15 @@ if verbe:
         df_indicatif_2 = pd.concat([df_imparfait, df_plus_que_parfait], axis=1)
 
         df_passe_simple = df_from_mode_tense_sub_table(verbe, 'indicatif', 'passe_simple', False)
+
         df_passe_anterieur = df_from_mode_tense_sub_table(verbe, 'indicatif', 'passe_anterieur', True)
+
         df_indicatif_3 = pd.concat([df_passe_simple, df_passe_anterieur], axis=1)
     
         df_futur = df_from_mode_tense_sub_table(verbe, 'indicatif', 'futur', False)
+
         df_futur_anterieur = df_from_mode_tense_sub_table(verbe, 'indicatif', 'futur_anterieur', True)
+
         df_indicatif_4 = pd.concat([df_futur, df_futur_anterieur], axis=1)
 
         with col1:
@@ -73,10 +76,12 @@ if verbe:
             
         df_present = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'present', False)
         df_passe = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'passe', True)
+
         df_subjonctif_1 = pd.concat([df_present, df_passe], axis=1)
         
         df_imparfait = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'imparfait', False)
         df_plus_que_parfait = df_from_mode_tense_sub_table(verbe, 'subjonctif', 'plus_que_parfait', True)
+
         df_subjonctif_2 = pd.concat([df_imparfait, df_plus_que_parfait], axis=1)
 
         with col5:
@@ -97,6 +102,18 @@ if verbe:
         with col7:
             st.table(df_conditionnel_1)
         
+
+        st.markdown('###### Imperatif') 
+            
+        col9, col10 = st.columns(2)
+            
+        df_present = df_from_mode_tense_sub_table(verbe, 'imperatif', 'present', True)
+        df_passe = df_from_mode_tense_sub_table(verbe, 'imperatif', 'passe', True)
+        
+        df_imperatif_1 = pd.concat([df_present, df_passe], axis=1)
+
+        with col9:
+            st.table(df_imperatif_1)
 
 
 
