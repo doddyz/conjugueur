@@ -2,3 +2,4 @@ streamlit==0.87.0
 pandas
 beautifulsoup4
 requests
+protobuf~=3.19.0
